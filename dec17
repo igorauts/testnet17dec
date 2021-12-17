@@ -1,0 +1,22 @@
+systemctl stop solana #стопаем солану
+solana-ledger-tool --ledger /root/solana/ledger/ create-snapshot 108469041 /root/solana/ledger/ --hard-fork 108469041 #делаем снэпшот
+nano /root/solana/solana.service #меняем сервисник, добавляем строчки (строки 4-18)
+--wait-for-supermajority 108469041 \
+--no-snapshot-fetch \
+--no-genesis-fetch \
+--expected-bank-hash BEAKFSqMu6H7s6H88wRrpTerGpmoLgMjSWbbyUheLti1 \
+--expected-shred-version 57124 \
+--entrypoint 5.9.35.85:8001 \
+--entrypoint 84.213.68.99:8000 \
+--entrypoint entrypoint.testnet.solana.com:8001 \
+--entrypoint entrypoint2.testnet.solana.com:8001 \
+--entrypoint entrypoint3.testnet.solana.com:8001 \
+--known-validator eoKpUABi59aT4rR9HGS3LcMecfut9x7zJyodWWP43YQ \
+--known-validator 9YVpEeZf8uBoUtzCFC6SSFDDqPt16uKFubNhLvGxeUDy \
+--known-validator 4958nAd4Gp1MZQEg97b7prdDKAgC5Ab3iQtNzAWyHqEV \
+--known-validator 4jhyvbBHbsRDF6och7pDQ7ahYTUr7wNkAYJTLLuMUtku \
+--known-validator D2ULkLgZk1d6RW3Wmd14vFNfkBgi6NMM8CDNsNuNXvfV \
+systemctl daemon-reload #перезапускаем сервис
+systemctl start solana #запускаем солану
+solana slot #проверяем слот
+tail -f /root/solana/solana.log | grep --line-buffered "active stake visible" #должны появиться проценты
