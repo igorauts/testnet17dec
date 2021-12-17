@@ -19,4 +19,4 @@ nano /root/solana/solana.service #меняем сервисник, добавл�
 systemctl daemon-reload #перезапускаем сервис
 systemctl start solana #запускаем солану
 solana slot #проверяем слот
-tail -f /root/solana/solana.log | grep --line-buffered "active stake visible" #должны появиться проценты
+tail -f /root/solana/solana.log | grep "active stake visible" #должны появиться проценты
